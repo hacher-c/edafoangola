@@ -22,13 +22,12 @@
         .card-sombra { box-shadow: 0 4px 20px rgba(22, 101, 52, 0.15); }
         .hidden { display: none !important; }
         .bloco { margin-bottom: 1.5rem; }
-        .logo-container { max-height: 80px; object-fit: contain; }
+        img { max-width: 100%; height: auto; }
     </style>
 </head>
 <body class="bg-green-50 min-h-screen font-sans text-gray-800">
 
 <script>
-// BASE DE DADOS COMPLETA — 21 PROVÍNCIAS
 const baseDados = {
   "Bengo": {
     municipios: ["Ambriz", "Bula Atumba", "Caxito", "Dande", "Nambuangongo", "Quicama"],
@@ -212,19 +211,14 @@ const baseDados = {
   }
 };
 
-// Ordenar municípios em cada província
 Object.keys(baseDados).forEach(prov => {
   baseDados[prov].municipios.sort((a, b) => a.localeCompare(b, 'pt'));
 });
 </script>
 
-    <!-- Tela Inicial -->
     <section id="tela-inicial" class="min-h-screen flex flex-col">
         <header class="bg-verde-escuro text-white py-5 px-6 shadow-md">
-            <!-- SEU LOGÓTIPO AQUI -->
             <div class="flex items-center gap-3 mb-2">
-                <!-- Instrução: Substitua "URL_DO_SEU_LOGO" pelo link ou caminho do seu logótipo -->
-                <img src="URL_DO_SEU_LOGO" alt="Logótipo EdafoANGOLA" class="logo-container h-12 w-auto rounded bg-white p-1" onerror="this.style.display='none'">
                 <div>
                     <h1 class="text-[clamp(1.5rem,4vw,2.2rem)] font-bold tracking-tight">EdafoANGOLA</h1>
                     <p class="text-green-200 text-sm">Solos e Climas para Quem Produz</p>
@@ -232,9 +226,11 @@ Object.keys(baseDados).forEach(prov => {
             </div>
         </header>
 
-        <div class="w-full h-52 overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1500382017468-9049fed1eb9b?w=1200&h=350&fit=crop" 
-                 alt="Campo agrícola" class="w-full h-full object-cover">
+        <div class="w-full h-40 overflow-hidden bg-green-100 flex items-center justify-center">
+            <div class="text-center">
+                <i class="fa fa-leaf text-verde-medio text-5xl mb-2"></i>
+                <p class="text-verde-escuro font-medium">Agricultura em Angola</p>
+            </div>
         </div>
 
         <main class="flex-1 px-6 py-6 max-w-4xl mx-auto w-full">
@@ -253,9 +249,15 @@ Object.keys(baseDados).forEach(prov => {
             </button>
 
             <div class="grid grid-cols-3 gap-3 mb-8">
-                <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=300&h=200&fit=crop" alt="Terra" class="rounded-lg w-full h-24 object-cover">
-                <img src="https://images.unsplash.com/photo-1592921870789-0416c73c05d4?w=300&h=200&fit=crop" alt="Agricultura" class="rounded-lg w-full h-24 object-cover">
-                <img src="https://images.unsplash.com/photo-1563514227147-6d2ff665a6a0?w=300&h=200&fit=crop" alt="Plantação" class="rounded-lg w-full h-24 object-cover">
+                <div class="bg-green-100 rounded-lg p-4 flex items-center justify-center h-24">
+                    <i class="fa fa-mountain text-verde-escuro text-3xl"></i>
+                </div>
+                <div class="bg-green-100 rounded-lg p-4 flex items-center justify-center h-24">
+                    <i class="fa fa-pagelines text-verde-escuro text-3xl"></i>
+                </div>
+                <div class="bg-green-100 rounded-lg p-4 flex items-center justify-center h-24">
+                    <i class="fa fa-tree text-verde-escuro text-3xl"></i>
+                </div>
             </div>
 
             <div class="text-center text-gray-500 text-sm border-t border-green-100 pt-4">
@@ -267,16 +269,12 @@ Object.keys(baseDados).forEach(prov => {
         </main>
     </section>
 
-    <!-- Tela Províncias -->
     <section id="tela-provincias" class="min-h-screen flex-col hidden">
         <header class="bg-verde-escuro text-white py-4 px-6 shadow-md flex items-center">
             <button id="voltar-inicio-1" class="mr-4 text-lg"><i class="fa fa-arrow-left"></i></button>
-            <div class="flex items-center gap-2">
-                <img src="URL_DO_SEU_LOGO" alt="EdafoANGOLA" class="h-8 w-auto rounded bg-white p-0.5" onerror="this.style.display='none'">
-                <div>
-                    <h1 class="text-xl font-bold">Províncias de Angola</h1>
-                    <p class="text-green-200 text-sm">Escolha uma província</p>
-                </div>
+            <div>
+                <h1 class="text-xl font-bold">Províncias de Angola</h1>
+                <p class="text-green-200 text-sm">Escolha uma província</p>
             </div>
         </header>
         <main class="px-6 py-6 max-w-4xl mx-auto w-full">
@@ -289,7 +287,6 @@ Object.keys(baseDados).forEach(prov => {
         </main>
     </section>
 
-    <!-- Tela Municípios -->
     <section id="tela-municipios" class="min-h-screen flex-col hidden">
         <header class="bg-verde-escuro text-white py-4 px-6 shadow-md flex items-center">
             <button id="voltar-prov" class="mr-4 text-lg"><i class="fa fa-arrow-left"></i></button>
@@ -308,7 +305,6 @@ Object.keys(baseDados).forEach(prov => {
         </main>
     </section>
 
-    <!-- Tela Dados -->
     <section id="tela-dados" class="min-h-screen flex-col hidden">
         <header class="bg-verde-escuro text-white py-4 px-6 shadow-md flex items-center">
             <button id="voltar-mun" class="mr-4 text-lg"><i class="fa fa-arrow-left"></i></button>
@@ -336,11 +332,8 @@ const telas = {
 };
 
 let provAtual = '';
-
-// Lista de províncias JÁ EM ORDEM ALFABÉTICA
 const provincianOrdenadas = Object.keys(baseDados).sort((a, b) => a.localeCompare(b, 'pt'));
 
-// Preencher lista de províncias
 const listaProvEl = document.getElementById('lista-prov');
 provincianOrdenadas.forEach(nome => {
   const li = document.createElement('li');
@@ -351,13 +344,11 @@ provincianOrdenadas.forEach(nome => {
   li.addEventListener('click', () => abrirMunicipios(nome));
 });
 
-// Navegação
 document.getElementById('btn-selecionar-provincia').onclick = () => { telas.inicio.classList.add('hidden'); telas.prov.classList.remove('hidden'); telas.prov.classList.add('flex'); };
 document.getElementById('voltar-inicio-1').onclick = () => { telas.prov.classList.add('hidden'); telas.inicio.classList.remove('hidden'); };
 document.getElementById('voltar-prov').onclick = () => { telas.mun.classList.add('hidden'); telas.prov.classList.remove('hidden'); };
 document.getElementById('voltar-mun').onclick = () => { telas.dados.classList.add('hidden'); telas.mun.classList.remove('hidden'); };
 
-// Busca províncias
 document.getElementById('busca-prov').addEventListener('input', e => {
   const t = e.target.value.toLowerCase();
   document.querySelectorAll('#lista-prov li').forEach(li => {
@@ -378,7 +369,6 @@ function abrirMunicipios(provNome) {
   const listaMunEl = document.getElementById('lista-mun');
   listaMunEl.innerHTML = '';
   
-  // Municípios JÁ ORDENADOS em cada província
   baseDados[provNome].municipios.forEach(nome => {
     const li = document.createElement('li');
     li.className = 'bg-white p-4 rounded-xl shadow-sm hover:bg-green-50 transition-colors cursor-pointer border-l-4 border-verde-medio';
@@ -390,7 +380,6 @@ function abrirMunicipios(provNome) {
   telas.prov.classList.add('hidden'); telas.mun.classList.remove('hidden'); telas.mun.classList.add('flex');
 }
 
-// Busca municípios
 document.getElementById('busca-mun').addEventListener('input', e => {
   const t = e.target.value.toLowerCase();
   document.querySelectorAll('#lista-mun li').forEach(li => {
