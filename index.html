@@ -1,0 +1,439 @@
+﻿<!DOCTYPE html>
+<html lang="pt-ao">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EdafoANGOLA — Solos e Climas para Quem Produz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        verde: { escuro: '#166534', medio: '#22c55e', claro: '#bbf7d0' },
+                        terra: '#78350f', areia: '#fef3c7'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .card-sombra { box-shadow: 0 4px 20px rgba(22, 101, 52, 0.15); }
+        .hidden { display: none !important; }
+        .bloco { margin-bottom: 1.5rem; }
+        .logo-container { max-height: 80px; object-fit: contain; }
+    </style>
+</head>
+<body class="bg-green-50 min-h-screen font-sans text-gray-800">
+
+<script>
+// BASE DE DADOS COMPLETA — 21 PROVÍNCIAS
+const baseDados = {
+  "Bengo": {
+    municipios: ["Ambriz", "Bula Atumba", "Caxito", "Dande", "Nambuangongo", "Quicama"],
+    solo: "Arenossolo + Ferralsolo — zona litoral pobre, interior mais rico e fértil",
+    clima: "Tropical Seco a Subúmido — chuvas Nov–Abr, 500–900mm/ano",
+    recomendadas: ["Mandioca", "Milho", "Hortícolas", "Frutas", "Pastagens e Gado"],
+    possiveis: ["Cana-de-açúcar", "Palmeiras", "Feijão"],
+    evitar: ["Culturas que exigem muita chuva constante"],
+    calendario: "Plantar: Novembro | Colher: Março–Maio",
+    dicas: "O interior é mais chuvoso que a costa. Aproveitar vales e margens de rios. No litoral, usar rega para hortícolas."
+  },
+  "Benguela": {
+    municipios: ["Balombo", "Baía Farta", "Benguela", "Bocoio", "Caimbambo", "Catumbela", "Chongorói", "Cubal", "Ganda", "Lobito"],
+    solo: "Arenossolo (costa) + Ferralsolo (interior) — costa pobre em nutrientes, escarpa e interior férteis",
+    clima: "Costa seca (300–600mm) → interior úmido (1000–1400mm), chuvas Nov–Abril",
+    recomendadas: ["Milho", "Feijão", "Mandioca", "Frutas tropicais", "Hortícolas (com rega)"],
+    possiveis: ["Cana-de-açúcar", "Algodão", "Girassol", "Café (interior)"],
+    evitar: ["Café na costa", "Culturas de clima frio"],
+    calendario: "Interior: Outubro–Março | Costa: só com irrigação garantida",
+    dicas: "A escarpa divide o clima: quanto mais acima, mais chuva e frescura. Cubal e Ganda são zonas agrícolas fortes."
+  },
+  "Bié": {
+    municipios: ["Andulo", "Camacupa", "Catabola", "Chinguar", "Chitembo", "Cuemba", "Cuíto", "Cunhinga", "Gamba"],
+    solo: "Ferralsolo — profundo, ácido, fertilidade natural baixa, exige adubação orgânica ou mineral",
+    clima: "Tropical de Altitude — fresco, noites frias, chuvas Nov–Abr, 1100–1500mm",
+    recomendadas: ["Milho", "Batata-inglesa", "Feijão", "Massambala", "Hortícolas"],
+    possiveis: ["Trigo", "Girassol", "Batata-doce"],
+    evitar: ["Culturas tropicais de muito calor", "Café", "Dendém"],
+    calendario: "Plantar: Novembro | Colher: Março–Maio — proteger de geadas a partir de Maio",
+    dicas: "Planalto Central — rotação de culturas é essencial para não esgotar a terra. Corrigir acidez com calcário."
+  },
+  "Cabinda": {
+    municipios: ["Buco Zau", "Cabinda", "Cacongo"],
+    solo: "Ferralsolo — profundo, ácido, drenagem excelente, fertilidade média-baixa",
+    clima: "Tropical Úmido — quente todo ano, chuvas Out–Maio, 1400–1800mm/ano",
+    recomendadas: ["Mandioca", "Banana", "Dendém / Óleo de palma", "Café", "Frutas tropicais"],
+    possiveis: ["Arroz (com irrigação nas baixadas)", "Milho"],
+    evitar: ["Sorgo", "Culturas resistentes à seca"],
+    calendario: "Plantar: Outubro–Novembro | Colher: Março–Junho",
+    dicas: "Solo ácido — adubar com matéria orgânica. Boa humidade natural, evitar desmatamento."
+  },
+  "Cuando Cubango": {
+    municipios: ["Calai", "Cuito Cuanavale", "Dirico", "Menongue", "Mavinga", "Nancova", "Rivungo"],
+    solo: "Arenossolo + Calcário — raso em zonas, fertilidade baixa a média",
+    clima: "Tropical Seco — chuvas Nov–Mar, 600–1000mm, estação seca longa e forte",
+    recomendadas: ["Sorgo", "Massambala", "Pastagens", "Gado", "Mandioca"],
+    possiveis: ["Milho (anos de boa chuva)"],
+    evitar: ["Café", "Feijão sem garantia de chuva", "Culturas de ciclo longo"],
+    calendario: "Plantar logo após primeira chuva: Novembro–Dezembro | Colher: Março–Abril",
+    dicas: "Secas frequentes — escolher variedades precoces. Cuidar dos campos de Cuito Cuanavale."
+  },
+  "Cuanza Norte": {
+    municipios: ["Ambaca", "Banga", "Bolongongo", "Cambambe", "Cazengo", "Golungo Alto", "Gonguembo", "Lucala", "N'dalatando", "Quiculungo", "Samba Caju"],
+    solo: "Ferralsolo — histórico para café, ácido, boa drenagem",
+    clima: "Tropical Subúmido — chuvas Out–Abr, 1000–1400mm",
+    recomendadas: ["Café", "Mandioca", "Milho", "Feijão", "Cana-de-açúcar"],
+    possiveis: ["Algodão", "Frutas tropicais"],
+    evitar: ["Culturas resistentes à seca"],
+    calendario: "Plantar: Outubro | Colher: Abril–Maio",
+    dicas: "Zona tradicional do café — manter sombra e cobertura no solo. Golungo Alto e Cazengo referências históricas."
+  },
+  "Cuanza Sul": {
+    municipios: ["Amboim", "Cassongue", "Cela", "Conda", "Ebo", "Libolo", "Mussende", "Porto Amboim", "Quibala", "Quilenda", "Seles", "Sumbe"],
+    solo: "Ferralsolo + Arenossolo — costa pobre, Libolo e interior muito férteis",
+    clima: "Costa: seca 600–1000mm / Interior: úmido 1000–1400mm, chuvas Out–Abril",
+    recomendadas: ["Mandioca", "Milho", "Feijão", "Soja", "Girassol", "Frutas"],
+    possiveis: ["Café (interior)", "Cana-de-açúcar", "Arroz"],
+    evitar: ["Culturas de clima frio extremo"],
+    calendario: "Plantar: Outubro–Novembro | Colher: Março–Maio",
+    dicas: "Libolo é celeiro nacional — aproveitar solos de vale. Costa precisa irrigação. Cela e Ebo têm altitude e frescura."
+  },
+  "Cunene": {
+    municipios: ["Cahama", "Cuanhama", "Curoca", "Cuvelai", "Namacunde", "Ondjiva", "Ombadja"],
+    solo: "Arenossolo + Vertissolo — pesado nos vales, arenoso no resto, fertilidade baixa",
+    clima: "Semi-Árido — chuvas Nov–Fev, 300–600mm, muito variável ano a ano",
+    recomendadas: ["Sorgo", "Massambala", "Milho resistente à seca", "Gado", "Pastagens"],
+    possiveis: ["Feijão-bravo", "Melancia (anos de chuva generosa)"],
+    evitar: ["Café", "Batata", "Culturas de ciclo longo"],
+    calendario: "Plantar IMEDIATAMENTE após primeira chuva — Novembro/Dezembro | Colher: Março",
+    dicas: "Secas frequentes — plantar perto de valas e depósitos. Usar sementes de ciclo curto (3 meses)."
+  },
+  "Huambo": {
+    municipios: ["Bailundo", "Caála", "Catchiungo", "Ekunha", "Huambo", "Londuimbale", "Longonjo", "Mungo", "Tchicala-Tcholoanga", "Tchindjenje", "Ucuma"],
+    solo: "Ferralsolo + Matacães — acidez forte, precisa fósforo e calcário, boa fertilidade com correção",
+    clima: "Tropical de Altitude — ameno, noites frescas, chuvas Out–Abr, 1200–1600mm",
+    recomendadas: ["Milho", "Batata-inglesa", "Feijão", "Trigo", "Hortícolas", "Soja"],
+    possiveis: ["Frutas de clima temperado", "Café (zonas mais baixas e quentes)"],
+    evitar: ["Cana-de-açúcar", "Dendém", "Culturas tropicais de muito calor"],
+    calendario: "Plantar: Outubro–Novembro | Colher: Fevereiro–Maio — geadas possíveis Junho–Agosto",
+    dicas: "Acima de 1700m — escolher variedades precoces. Corrigir acidez com calcário. Bailundo e Caála referências agrícolas."
+  },
+  "Huíla": {
+    municipios: ["Caconda", "Caluquembe", "Chibia", "Chiange", "Chicomba", "Chipindo", "Gambos", "Humpata", "Jamba", "Kuvango", "Lubango", "Matala", "Quilengues", "Quipungo"],
+    solo: "Ferralsolo + Matacães — serras ricas, vales produtivos, acidez variável",
+    clima: "Tropical de Altitude — fresco nas serras, mais quente nos vales, chuvas Nov–Abr 800–1400mm",
+    recomendadas: ["Milho", "Batata", "Feijão", "Massambala", "Hortícolas", "Frutas"],
+    possiveis: ["Café (zonas médias)", "Soja", "Girassol", "Cana-de-açúcar (vales)"],
+    evitar: ["Culturas muito sensíveis ao frio"],
+    calendario: "Plantar: Outubro–Novembro | Colher: Março–Maio",
+    dicas: "Uma das regiões mais produtivas. Zonas altas: proteger de geadas Maio–Agosto. Matala tem água e calor — ideal cana e frutas."
+  },
+  "Lunda Norte": {
+    municipios: ["Cambulo", "Capenda-Camulemba", "Caungula", "Chitato", "Cuango", "Cuilo", "Dundo", "Lóvua", "Lubalo", "Lucapa", "Xá-Muteba"],
+    solo: "Ferralsolo — profundo, ácido, bem drenado, baixa fertilidade natural",
+    clima: "Tropical Úmido — chuvas Out–Maio, 1300–1800mm, quente e húmido",
+    recomendadas: ["Mandioca", "Milho", "Feijão", "Arroz", "Banana", "Frutas tropicais"],
+    possiveis: ["Café", "Dendém", "Abacaxi"],
+    evitar: ["Culturas de clima seco", "Massambala"],
+    calendario: "Plantar: Outubro–Novembro | Colher: Abril–Junho",
+    dicas: "Floresta e savana — proteger margens de rios. Solo ácido: adubação orgânica faz diferença."
+  },
+  "Lunda Sul": {
+    municipios: ["Cacolo", "Dala", "Muconda", "Saurimo"],
+    solo: "Ferralsolo — ácido, bem drenado, precisa de fósforo e matéria orgânica",
+    clima: "Tropical Subúmido — chuvas Nov–Abr, 1100–1400mm, estação seca definida",
+    recomendadas: ["Mandioca", "Milho", "Feijão", "Massambala", "Batata-doce"],
+    possiveis: ["Frutas tropicais resistentes", "Hortícolas na estação chuvosa"],
+    evitar: ["Culturas muito exigentes em água"],
+    calendario: "Plantar: Novembro | Colher: Abril–Maio",
+    dicas: "Terra boa, não desgastar com monocultura. Rotação de culturas mantém a terra produtiva."
+  },
+  "Luanda": {
+    municipios: ["Belas", "Cacuaco", "Cazenga", "Icolo e Bengo", "Luanda", "Quilamba Quiaxi", "Quissama", "Talatona", "Viana"],
+    solo: "Arenossolo — muito arenoso, pouca retenção de água, fertilidade baixa",
+    clima: "Tropical Seco — chuvas limitadas Fev–Abr, 300–500mm/ano, calor constante",
+    recomendadas: ["Hortícolas (com rega obrigatória)", "Coco", "Frutas resistentes", "Mandacaru"],
+    possiveis: ["Milho (só na época chuvosa curta)", "Feijão"],
+    evitar: ["Café", "Dendém", "Qualquer cultura sem água garantida"],
+    calendario: "Plantar: Fevereiro | Colher: Maio–Junho — fora de época: só com irrigação",
+    dicas: "Água é o recurso mais escasso — usar cobertura morta para conservar humidade. Adubar sempre o solo arenoso."
+  },
+  "Malanje": {
+    municipios: ["Cacuso", "Calandula", "Cambundi-Catembo", "Cangandala", "Caombo", "Cunda-dia-Baze", "Kiwaba Nzogi", "Luquembo", "Marimba", "Massango", "Mucari", "Malanje", "Quela", "Quirima"],
+    solo: "Ferralsolo + Calcário — zonas com calcário são mais ricas, acidez mista",
+    clima: "Tropical Subúmido — chuvas Out–Abr, 1000–1400mm",
+    recomendadas: ["Mandioca", "Milho", "Arroz", "Algodão", "Frutas tropicais", "Café"],
+    possiveis: ["Cana-de-açúcar", "Mamona", "Dendém"],
+    evitar: ["Culturas de clima frio", "Batata-inglesa"],
+    calendario: "Plantar: Outubro | Colher: Março–Maio",
+    dicas: "Calandula e arredores têm solos mais ricos. Não desgastar com uma só cultura. Cangandala é zona de reserva e solo especial."
+  },
+  "Moxico": {
+    municipios: ["Alto Zambeze", "Camanongue", "Cameia", "Leua", "Luacano", "Luena", "Luchazes", "Lumbala Nguimbo"],
+    solo: "Arenossolo — profundo, arenoso, baixa retenção de água, fertilidade natural baixa",
+    clima: "Tropical de Savana — chuvas Nov–Abr, 1000–1400mm, estação seca longa",
+    recomendadas: ["Mandioca", "Milho", "Sorgo", "Massambala", "Pastagens e Gado"],
+    possiveis: ["Feijão", "Frutas resistentes"],
+    evitar: ["Culturas que precisam de chuva constante", "Hortícolas sem rega"],
+    calendario: "Plantar: Novembro | Colher: Abril–Maio",
+    dicas: "Solo arenoso — manter sempre coberto para não perder humidade. Fogo controlado na estação seca."
+  },
+  "Namibe": {
+    municipios: ["Bibala", "Camacuio", "Moçâmedes", "Tombua", "Virei"],
+    solo: "Arenossolo — deserto, muito arenoso, quase sem matéria orgânica",
+    clima: "Semi-Árido a Desértico — muito seco, 50–300mm/ano, chuvas imprevisíveis",
+    recomendadas: ["Culturas de oásis com irrigação", "Palmeiras-datileiras", "Figueira-da-índia", "Gado resistente"],
+    possiveis: ["Hortícolas SOMENTE com irrigação controlada", "Tomate e cebola em campos fechados"],
+    evitar: ["QUALQUER cultura sem água garantida"],
+    calendario: "Chuvas imprevisíveis — plantar com sistema de irrigação o ano todo.",
+    dicas: "Água é mais cara que terra — captar águas subterrâneas e de ravina. Nunca deixar o solo exposto."
+  },
+  "Uíge": {
+    municipios: ["Alto Cauale", "Ambuíla", "Bembe", "Buengas", "Bungo", "Damba", "Maquela do Zombo", "Mucaba", "Negale", "Puri", "Quimbele", "Quitexe", "Santa Cruz", "Sanza Pombo", "Songo", "Uíge"],
+    solo: "Ferralsolo vermelho-amarelo — ácido, boa drenagem, precisa fósforo e calcário",
+    clima: "Tropical Úmido — chuvas Out–Maio, 1300–1700mm, temperaturas amenas",
+    recomendadas: ["Café", "Mandioca", "Arroz", "Milho", "Feijão", "Banana"],
+    possiveis: ["Frutas tropicais", "Mamona", "Abacaxi"],
+    evitar: ["Cana-de-açúcar em excesso", "Culturas de solo calcário"],
+    calendario: "Plantar: Outubro–Novembro | Colher: Abril–Junho",
+    dicas: "Uma das melhores zonas do país para café — sombrear pés jovens. Adubar com matéria orgânica."
+  },
+  "Zaire": {
+    municipios: ["Cuimba", "M'Banza Kongo", "N'Zeto", "Noqui", "Soyo", "Tomboco"],
+    solo: "Ferralsolo + Arenossolo — ácido, bem drenado, fertilidade baixa",
+    clima: "Tropical Úmido — chuvas Out–Abril, 1200–1500mm, calor constante",
+    recomendadas: ["Mandioca", "Dendém", "Banana", "Milho", "Feijão"],
+    possiveis: ["Cacau", "Abacaxi", "Frutas"],
+    evitar: ["Culturas de clima frio", "Batata"],
+    calendario: "Plantar: Outubro | Colher: Fevereiro–Maio",
+    dicas: "Soyo e zonas ribeirinhas — proteger margens dos rios. Solo do interior mais fértil que a costa."
+  }
+};
+
+// Ordenar municípios em cada província
+Object.keys(baseDados).forEach(prov => {
+  baseDados[prov].municipios.sort((a, b) => a.localeCompare(b, 'pt'));
+});
+</script>
+
+    <!-- Tela Inicial -->
+    <section id="tela-inicial" class="min-h-screen flex flex-col">
+        <header class="bg-verde-escuro text-white py-5 px-6 shadow-md">
+            <!-- SEU LOGÓTIPO AQUI -->
+            <div class="flex items-center gap-3 mb-2">
+                <!-- Instrução: Substitua "URL_DO_SEU_LOGO" pelo link ou caminho do seu logótipo -->
+                <img src="URL_DO_SEU_LOGO" alt="Logótipo EdafoANGOLA" class="logo-container h-12 w-auto rounded bg-white p-1" onerror="this.style.display='none'">
+                <div>
+                    <h1 class="text-[clamp(1.5rem,4vw,2.2rem)] font-bold tracking-tight">EdafoANGOLA</h1>
+                    <p class="text-green-200 text-sm">Solos e Climas para Quem Produz</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="w-full h-52 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1500382017468-9049fed1eb9b?w=1200&h=350&fit=crop" 
+                 alt="Campo agrícola" class="w-full h-full object-cover">
+        </div>
+
+        <main class="flex-1 px-6 py-6 max-w-4xl mx-auto w-full">
+            <h2 class="text-2xl font-bold text-verde-escuro mb-3">Bem-vindo</h2>
+            <p class="text-gray-600 mb-6">Consulte informações confiáveis sobre solos, climas e as melhores culturas para cada região de Angola.</p>
+
+            <div class="relative mb-6">
+                <i class="fa fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-lg"></i>
+                <input type="text" id="busca-global" placeholder="Buscar província..." 
+                       class="w-full pl-12 pr-4 py-3 rounded-xl border border-green-200 focus:outline-none focus:ring-2 focus:ring-verde-medio bg-white card-sombra">
+            </div>
+
+            <button id="btn-selecionar-provincia" 
+                    class="w-full bg-verde-escuro hover:bg-green-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 text-lg mb-8 card-sombra">
+                SELECIONAR PROVÍNCIA
+            </button>
+
+            <div class="grid grid-cols-3 gap-3 mb-8">
+                <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=300&h=200&fit=crop" alt="Terra" class="rounded-lg w-full h-24 object-cover">
+                <img src="https://images.unsplash.com/photo-1592921870789-0416c73c05d4?w=300&h=200&fit=crop" alt="Agricultura" class="rounded-lg w-full h-24 object-cover">
+                <img src="https://images.unsplash.com/photo-1563514227147-6d2ff665a6a0?w=300&h=200&fit=crop" alt="Plantação" class="rounded-lg w-full h-24 object-cover">
+            </div>
+
+            <div class="text-center text-gray-500 text-sm border-t border-green-100 pt-4">
+                <p class="font-semibold text-verde-escuro">EdafoANGOLA</p>
+                <p>Criado por Carlos Kiguisiya Bundi</p>
+                <p>© Hacher — Todos os direitos reservados</p>
+                <p class="mt-2 text-xs">Fontes: INAMET, Ministério da Agricultura, Estudos de Solos de Angola, WorldClim, RCNA</p>
+            </div>
+        </main>
+    </section>
+
+    <!-- Tela Províncias -->
+    <section id="tela-provincias" class="min-h-screen flex-col hidden">
+        <header class="bg-verde-escuro text-white py-4 px-6 shadow-md flex items-center">
+            <button id="voltar-inicio-1" class="mr-4 text-lg"><i class="fa fa-arrow-left"></i></button>
+            <div class="flex items-center gap-2">
+                <img src="URL_DO_SEU_LOGO" alt="EdafoANGOLA" class="h-8 w-auto rounded bg-white p-0.5" onerror="this.style.display='none'">
+                <div>
+                    <h1 class="text-xl font-bold">Províncias de Angola</h1>
+                    <p class="text-green-200 text-sm">Escolha uma província</p>
+                </div>
+            </div>
+        </header>
+        <main class="px-6 py-6 max-w-4xl mx-auto w-full">
+            <div class="relative mb-6">
+                <i class="fa fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+                <input type="text" id="busca-prov" placeholder="Filtrar província..." 
+                       class="w-full pl-12 pr-4 py-3 rounded-xl border border-green-200 focus:outline-none bg-white">
+            </div>
+            <ul id="lista-prov" class="space-y-3"></ul>
+        </main>
+    </section>
+
+    <!-- Tela Municípios -->
+    <section id="tela-municipios" class="min-h-screen flex-col hidden">
+        <header class="bg-verde-escuro text-white py-4 px-6 shadow-md flex items-center">
+            <button id="voltar-prov" class="mr-4 text-lg"><i class="fa fa-arrow-left"></i></button>
+            <div>
+                <h1 id="nome-provincia" class="text-xl font-bold"></h1>
+                <p class="text-green-200 text-sm">Escolha o município</p>
+            </div>
+        </header>
+        <main class="px-6 py-6 max-w-4xl mx-auto w-full">
+            <div class="relative mb-6">
+                <i class="fa fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+                <input type="text" id="busca-mun" placeholder="Filtrar município..." 
+                       class="w-full pl-12 pr-4 py-3 rounded-xl border border-green-200 focus:outline-none bg-white">
+            </div>
+            <ul id="lista-mun" class="space-y-3"></ul>
+        </main>
+    </section>
+
+    <!-- Tela Dados -->
+    <section id="tela-dados" class="min-h-screen flex-col hidden">
+        <header class="bg-verde-escuro text-white py-4 px-6 shadow-md flex items-center">
+            <button id="voltar-mun" class="mr-4 text-lg"><i class="fa fa-arrow-left"></i></button>
+            <div>
+                <h1 id="nome-municipio" class="text-xl font-bold"></h1>
+                <p id="nome-da-prov" class="text-green-200 text-sm"></p>
+            </div>
+        </header>
+        <main class="px-6 py-6 max-w-4xl mx-auto w-full">
+            <div id="blocos-dados"></div>
+            <div class="text-center text-gray-500 text-xs mt-8 pt-4 border-t">
+                <p>EdafoANGOLA — Criado por Carlos Kiguisiya Bundi</p>
+                <p>© Hacher — Todos os direitos reservados</p>
+                <p class="mt-1">Fontes: INAMET, Ministério da Agricultura, Estudos de Solos de Angola, WorldClim, RCNA</p>
+            </div>
+        </main>
+    </section>
+
+<script>
+const telas = {
+  inicio: document.getElementById('tela-inicial'),
+  prov: document.getElementById('tela-provincias'),
+  mun: document.getElementById('tela-municipios'),
+  dados: document.getElementById('tela-dados')
+};
+
+let provAtual = '';
+
+// Lista de províncias JÁ EM ORDEM ALFABÉTICA
+const provincianOrdenadas = Object.keys(baseDados).sort((a, b) => a.localeCompare(b, 'pt'));
+
+// Preencher lista de províncias
+const listaProvEl = document.getElementById('lista-prov');
+provincianOrdenadas.forEach(nome => {
+  const li = document.createElement('li');
+  li.className = 'provincia-item bg-white p-4 rounded-xl shadow-sm hover:bg-green-50 transition-colors cursor-pointer border-l-4 border-verde-medio';
+  li.dataset.prov = nome;
+  li.textContent = nome;
+  listaProvEl.appendChild(li);
+  li.addEventListener('click', () => abrirMunicipios(nome));
+});
+
+// Navegação
+document.getElementById('btn-selecionar-provincia').onclick = () => { telas.inicio.classList.add('hidden'); telas.prov.classList.remove('hidden'); telas.prov.classList.add('flex'); };
+document.getElementById('voltar-inicio-1').onclick = () => { telas.prov.classList.add('hidden'); telas.inicio.classList.remove('hidden'); };
+document.getElementById('voltar-prov').onclick = () => { telas.mun.classList.add('hidden'); telas.prov.classList.remove('hidden'); };
+document.getElementById('voltar-mun').onclick = () => { telas.dados.classList.add('hidden'); telas.mun.classList.remove('hidden'); };
+
+// Busca províncias
+document.getElementById('busca-prov').addEventListener('input', e => {
+  const t = e.target.value.toLowerCase();
+  document.querySelectorAll('#lista-prov li').forEach(li => {
+    li.style.display = li.dataset.prov.toLowerCase().includes(t) ? 'block' : 'none';
+  });
+});
+document.getElementById('busca-global').addEventListener('input', e => {
+  const t = e.target.value.toLowerCase();
+  document.querySelectorAll('#lista-prov li').forEach(li => {
+    li.style.display = li.dataset.prov.toLowerCase().includes(t) ? 'block' : 'none';
+  });
+  if(t.length > 0) { telas.inicio.classList.add('hidden'); telas.prov.classList.remove('hidden'); telas.prov.classList.add('flex'); }
+});
+
+function abrirMunicipios(provNome) {
+  provAtual = provNome;
+  document.getElementById('nome-provincia').textContent = provNome;
+  const listaMunEl = document.getElementById('lista-mun');
+  listaMunEl.innerHTML = '';
+  
+  // Municípios JÁ ORDENADOS em cada província
+  baseDados[provNome].municipios.forEach(nome => {
+    const li = document.createElement('li');
+    li.className = 'bg-white p-4 rounded-xl shadow-sm hover:bg-green-50 transition-colors cursor-pointer border-l-4 border-verde-medio';
+    li.textContent = nome;
+    li.addEventListener('click', () => abrirDados(provNome, nome));
+    listaMunEl.appendChild(li);
+  });
+  
+  telas.prov.classList.add('hidden'); telas.mun.classList.remove('hidden'); telas.mun.classList.add('flex');
+}
+
+// Busca municípios
+document.getElementById('busca-mun').addEventListener('input', e => {
+  const t = e.target.value.toLowerCase();
+  document.querySelectorAll('#lista-mun li').forEach(li => {
+    li.style.display = li.textContent.toLowerCase().includes(t) ? 'block' : 'none';
+  });
+});
+
+function abrirDados(provNome, munNome) {
+  const d = baseDados[provNome];
+  document.getElementById('nome-municipio').textContent = munNome;
+  document.getElementById('nome-da-prov').textContent = provNome;
+  
+  const blocos = document.getElementById('blocos-dados');
+  blocos.innerHTML = `
+    <div class="bloco bg-white p-5 rounded-xl card-sombra">
+      <h3 class="font-bold text-lg text-verde-escuro mb-2">🪨 Solo</h3>
+      <p class="text-gray-700">${d.solo}</p>
+    </div>
+    <div class="bloco bg-white p-5 rounded-xl card-sombra">
+      <h3 class="font-bold text-lg text-verde-escuro mb-2">🌤️ Clima</h3>
+      <p class="text-gray-700">${d.clima}</p>
+    </div>
+    <div class="bloco bg-white p-5 rounded-xl card-sombra">
+      <h3 class="font-bold text-lg text-verde-escuro mb-2">🌱 O que Plantar</h3>
+      <p class="text-green-700 font-semibold">✅ Recomendadas:</p>
+      <p class="mb-2">${d.recomendadas.join(' • ')}</p>
+      <p class="text-yellow-600 font-semibold">🟡 Possíveis (com cuidados):</p>
+      <p class="mb-2">${d.possiveis.join(' • ')}</p>
+      <p class="text-red-600 font-semibold">❌ Não Recomendadas:</p>
+      <p>${d.evitar.join(' • ')}</p>
+    </div>
+    <div class="bloco bg-white p-5 rounded-xl card-sombra">
+      <h3 class="font-bold text-lg text-verde-escuro mb-2">📅 Calendário Agrícola</h3>
+      <p class="text-gray-700">${d.calendario}</p>
+    </div>
+    <div class="bloco bg-white p-5 rounded-xl card-sombra">
+      <h3 class="font-bold text-lg text-verde-escuro mb-2">💧 Dicas Práticas</h3>
+      <p class="text-gray-700">${d.dicas}</p>
+    </div>
+  `;
+  
+  telas.mun.classList.add('hidden'); telas.dados.classList.remove('hidden'); telas.dados.classList.add('flex');
+}
+</script>
+</body>
+</html>
