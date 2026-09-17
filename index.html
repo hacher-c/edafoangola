@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-ao">
 <head>
     <meta charset="UTF-8">
@@ -22,7 +22,7 @@
         .card-sombra { box-shadow: 0 4px 20px rgba(22, 101, 52, 0.15); }
         .hidden { display: none !important; }
         .bloco { margin-bottom: 1.5rem; }
-        img { max-width: 100%; height: auto; }
+        body { overscroll-behavior: none; }
     </style>
 </head>
 <body class="bg-green-50 min-h-screen font-sans text-gray-800">
@@ -30,184 +30,235 @@
 <script>
 const baseDados = {
   "Bengo": {
+    capital: "Caxito",
     municipios: ["Ambriz", "Bula Atumba", "Caxito", "Dande", "Nambuangongo", "Quicama"],
-    solo: "Arenossolo + Ferralsolo — zona litoral pobre, interior mais rico e fértil",
-    clima: "Tropical Seco a Subúmido — chuvas Nov–Abr, 500–900mm/ano",
-    recomendadas: ["Mandioca", "Milho", "Hortícolas", "Frutas", "Pastagens e Gado"],
-    possiveis: ["Cana-de-açúcar", "Palmeiras", "Feijão"],
-    evitar: ["Culturas que exigem muita chuva constante"],
-    calendario: "Plantar: Novembro | Colher: Março–Maio",
-    dicas: "O interior é mais chuvoso que a costa. Aproveitar vales e margens de rios. No litoral, usar rega para hortícolas."
+    solo: "Zona do litoral: terra arenosa, clara, guarda pouca humidade. Interior: terra mais escura e rica, boa para agricultura.",
+    clima: "Perto do mar: quente e seco. Mais para dentro: mais chuva entre Novembro e Abril. 500 a 900mm de chuva por ano.",
+    recomendadas: ["Mandioca", "Milho", "Feijão", "Hortaliças", "Frutas"],
+    possiveis: ["Coco", "Cana-de-açúcar", "Pastagens para gado"],
+    evitar: ["Culturas que precisam de muita chuva constante"],
+    calendario: "Plantar: Novembro | Colher: Março a Maio",
+    dicas: "No litoral, rega as hortaliças. Aproveita as margens dos rios onde a terra é mais fresca."
   },
   "Benguela": {
+    capital: "Benguela",
     municipios: ["Balombo", "Baía Farta", "Benguela", "Bocoio", "Caimbambo", "Catumbela", "Chongorói", "Cubal", "Ganda", "Lobito"],
-    solo: "Arenossolo (costa) + Ferralsolo (interior) — costa pobre em nutrientes, escarpa e interior férteis",
-    clima: "Costa seca (300–600mm) → interior úmido (1000–1400mm), chuvas Nov–Abril",
-    recomendadas: ["Milho", "Feijão", "Mandioca", "Frutas tropicais", "Hortícolas (com rega)"],
-    possiveis: ["Cana-de-açúcar", "Algodão", "Girassol", "Café (interior)"],
-    evitar: ["Café na costa", "Culturas de clima frio"],
-    calendario: "Interior: Outubro–Março | Costa: só com irrigação garantida",
-    dicas: "A escarpa divide o clima: quanto mais acima, mais chuva e frescura. Cubal e Ganda são zonas agrícolas fortes."
+    solo: "Costa: terra muito arenosa, precisa de adubo. Interior e serra: terra escura e fértil, muito boa para agricultura.",
+    clima: "Costa quente e seca, pouca chuva. Subindo a serra, fica mais fresco e chove muito mais. 300mm na costa até 1400mm no interior.",
+    recomendadas: ["Milho", "Feijão", "Mandioca", "Frutas", "Hortaliças"],
+    possiveis: ["Café nas zonas altas", "Cana-de-açúcar", "Girassol"],
+    evitar: ["Café e culturas de clima frio na costa"],
+    calendario: "Plantar: Outubro a Novembro | Colher: Março a Maio",
+    dicas: "Quanto mais alto, mais chuva. Cubal e Ganda são zonas muito fortes de produção."
   },
   "Bié": {
-    municipios: ["Andulo", "Camacupa", "Catabola", "Chinguar", "Chitembo", "Cuemba", "Cuíto", "Cunhinga", "Gamba"],
-    solo: "Ferralsolo — profundo, ácido, fertilidade natural baixa, exige adubação orgânica ou mineral",
-    clima: "Tropical de Altitude — fresco, noites frias, chuvas Nov–Abr, 1100–1500mm",
-    recomendadas: ["Milho", "Batata-inglesa", "Feijão", "Massambala", "Hortícolas"],
+    capital: "Kuito",
+    municipios: ["Andulo", "Camacupa", "Catabola", "Chinguar", "Chitembo", "Cuemba", "Kuito", "Cunhinga", "Gamba"],
+    solo: "Terra vermelha profunda. É um pouco ácida — mistura com cinza ou calcário melhora muito. Precisa de adubo para manter a força.",
+    clima: "Terra fresca, noites frias. Chuva de Novembro a Abril. 1100 a 1500mm por ano. Cuidado com frio forte de Maio a Agosto.",
+    recomendadas: ["Milho", "Batata-inglesa", "Feijão", "Massambala", "Hortaliças"],
     possiveis: ["Trigo", "Girassol", "Batata-doce"],
-    evitar: ["Culturas tropicais de muito calor", "Café", "Dendém"],
-    calendario: "Plantar: Novembro | Colher: Março–Maio — proteger de geadas a partir de Maio",
-    dicas: "Planalto Central — rotação de culturas é essencial para não esgotar a terra. Corrigir acidez com calcário."
+    evitar: ["Banana, Dendém e culturas que precisam de muito calor"],
+    calendario: "Plantar: Novembro | Colher: Março a Maio",
+    dicas: "Não plante sempre a mesma coisa — rotação de culturas mantém a terra forte."
   },
   "Cabinda": {
+    capital: "Cabinda",
     municipios: ["Buco Zau", "Cabinda", "Cacongo"],
-    solo: "Ferralsolo — profundo, ácido, drenagem excelente, fertilidade média-baixa",
-    clima: "Tropical Úmido — quente todo ano, chuvas Out–Maio, 1400–1800mm/ano",
-    recomendadas: ["Mandioca", "Banana", "Dendém / Óleo de palma", "Café", "Frutas tropicais"],
-    possiveis: ["Arroz (com irrigação nas baixadas)", "Milho"],
-    evitar: ["Sorgo", "Culturas resistentes à seca"],
-    calendario: "Plantar: Outubro–Novembro | Colher: Março–Junho",
-    dicas: "Solo ácido — adubar com matéria orgânica. Boa humidade natural, evitar desmatamento."
+    solo: "Terra vermelha, bem drenada, não acumula água. É um pouco ácida. Boa para árvores e culturas permanentes.",
+    clima: "Quente e húmido todo o ano. Chuva forte de Outubro a Maio. 1400 a 1800mm por ano.",
+    recomendadas: ["Mandioca", "Banana", "Dendém", "Café", "Frutas tropicais"],
+    possiveis: ["Arroz nas zonas baixas", "Abacaxi"],
+    evitar: ["Sorgo, massambala e culturas resistentes à seca"],
+    calendario: "Plantar: Outubro | Colher: Março a Junho",
+    dicas: "Mata natural forte — não desmata tudo. Deixa sempre a terra coberta com folhas e ramos."
   },
-  "Cuando Cubango": {
-    municipios: ["Calai", "Cuito Cuanavale", "Dirico", "Menongue", "Mavinga", "Nancova", "Rivungo"],
-    solo: "Arenossolo + Calcário — raso em zonas, fertilidade baixa a média",
-    clima: "Tropical Seco — chuvas Nov–Mar, 600–1000mm, estação seca longa e forte",
-    recomendadas: ["Sorgo", "Massambala", "Pastagens", "Gado", "Mandioca"],
-    possiveis: ["Milho (anos de boa chuva)"],
-    evitar: ["Café", "Feijão sem garantia de chuva", "Culturas de ciclo longo"],
-    calendario: "Plantar logo após primeira chuva: Novembro–Dezembro | Colher: Março–Abril",
-    dicas: "Secas frequentes — escolher variedades precoces. Cuidar dos campos de Cuito Cuanavale."
+  "Cuando": {
+    capital: "A definir",
+    municipios: ["Menongue", "Cuito Cuanavale", "Rivungo", "Nancova"],
+    solo: "Terra clara e arenosa em grande parte. Zonas de vale têm terra mais rica e escura. Geralmente baixa em nutrientes.",
+    clima: "Chuva de Novembro a Março, depois estação seca longa e forte. 600 a 1000mm por ano.",
+    recomendadas: ["Sorgo", "Massambala", "Mandioca", "Pastagens", "Gado"],
+    possiveis: ["Milho em anos de boa chuva"],
+    evitar: ["Café, feijão sem garantia de chuva, culturas de ciclo longo"],
+    calendario: "Plantar logo após primeira chuva: Novembro | Colher: Março a Abril",
+    dicas: "Secas frequentes — escolhe sementes que amadurecem cedo. Planta perto de rios e valas."
+  },
+  "Cubango": {
+    capital: "A definir",
+    municipios: ["Calai", "Dirico", "Mavinga"],
+    solo: "Terra arenosa e leve. Mais próxima da Namíbia — zonas de savana extensa. Fertilidade baixa, mas vales são bons.",
+    clima: "Chuva mais curta e imprevisível. 500 a 800mm por ano. Estação seca muito marcada.",
+    recomendadas: ["Sorgo", "Massambala", "Mandioca", "Pastagens", "Gado"],
+    possiveis: ["Milho de ciclo curto em anos bons"],
+    evitar: ["Café, culturas de ciclo longo, arroz sem irrigação"],
+    calendario: "Plantar cedo em Novembro | Colher Fevereiro a Março — não espera muito",
+    dicas: "A chuva acaba cedo — escolhe variedades que amadurecem rápido. Protege as nascentes."
   },
   "Cuanza Norte": {
+    capital: "N'dalatando",
     municipios: ["Ambaca", "Banga", "Bolongongo", "Cambambe", "Cazengo", "Golungo Alto", "Gonguembo", "Lucala", "N'dalatando", "Quiculungo", "Samba Caju"],
-    solo: "Ferralsolo — histórico para café, ácido, boa drenagem",
-    clima: "Tropical Subúmido — chuvas Out–Abr, 1000–1400mm",
+    solo: "Terra vermelha, histórica para o café. Bem drenada, um pouco ácida. Fica forte com adubo orgânico.",
+    clima: "Chuva de Outubro a Abril, bem distribuída. 1000 a 1400mm por ano. Quente mas não excessivo.",
     recomendadas: ["Café", "Mandioca", "Milho", "Feijão", "Cana-de-açúcar"],
-    possiveis: ["Algodão", "Frutas tropicais"],
-    evitar: ["Culturas resistentes à seca"],
-    calendario: "Plantar: Outubro | Colher: Abril–Maio",
-    dicas: "Zona tradicional do café — manter sombra e cobertura no solo. Golungo Alto e Cazengo referências históricas."
+    possiveis: ["Frutas tropicais", "Algodão"],
+    evitar: ["Culturas que precisam de pouca chuva"],
+    calendario: "Plantar: Outubro | Colher: Abril a Maio",
+    dicas: "Zona tradicional do café — mantém sombra com árvores. Golungo Alto e Cazengo referências antigas."
   },
   "Cuanza Sul": {
+    capital: "Sumbe",
     municipios: ["Amboim", "Cassongue", "Cela", "Conda", "Ebo", "Libolo", "Mussende", "Porto Amboim", "Quibala", "Quilenda", "Seles", "Sumbe"],
-    solo: "Ferralsolo + Arenossolo — costa pobre, Libolo e interior muito férteis",
-    clima: "Costa: seca 600–1000mm / Interior: úmido 1000–1400mm, chuvas Out–Abril",
+    solo: "Costa: terra clara e arenosa, precisa de rega. Libolo e interior: terra escura e muito fértil, uma das melhores do país.",
+    clima: "Costa mais seca, interior mais fresco e chuvoso. 600mm na costa até 1400mm no interior.",
     recomendadas: ["Mandioca", "Milho", "Feijão", "Soja", "Girassol", "Frutas"],
-    possiveis: ["Café (interior)", "Cana-de-açúcar", "Arroz"],
-    evitar: ["Culturas de clima frio extremo"],
-    calendario: "Plantar: Outubro–Novembro | Colher: Março–Maio",
-    dicas: "Libolo é celeiro nacional — aproveitar solos de vale. Costa precisa irrigação. Cela e Ebo têm altitude e frescura."
+    possiveis: ["Café nas zonas altas", "Cana-de-açúcar", "Arroz"],
+    evitar: ["Culturas de clima muito frio"],
+    calendario: "Plantar: Outubro a Novembro | Colher: Março a Maio",
+    dicas: "Libolo é celeiro nacional — aproveita ao máximo. Costa só produz bem com irrigação."
   },
   "Cunene": {
+    capital: "Ondjiva",
     municipios: ["Cahama", "Cuanhama", "Curoca", "Cuvelai", "Namacunde", "Ondjiva", "Ombadja"],
-    solo: "Arenossolo + Vertissolo — pesado nos vales, arenoso no resto, fertilidade baixa",
-    clima: "Semi-Árido — chuvas Nov–Fev, 300–600mm, muito variável ano a ano",
+    solo: "Terra arenosa e clara na maior parte. Nos vales e zonas de acumulação: terra mais pesada que retém água. Fertilidade baixa.",
+    clima: "Muito seco. Chuva curta de Novembro a Fevereiro. 300 a 600mm por ano, muito variável.",
     recomendadas: ["Sorgo", "Massambala", "Milho resistente à seca", "Gado", "Pastagens"],
-    possiveis: ["Feijão-bravo", "Melancia (anos de chuva generosa)"],
-    evitar: ["Café", "Batata", "Culturas de ciclo longo"],
-    calendario: "Plantar IMEDIATAMENTE após primeira chuva — Novembro/Dezembro | Colher: Março",
-    dicas: "Secas frequentes — plantar perto de valas e depósitos. Usar sementes de ciclo curto (3 meses)."
+    possiveis: ["Melancia e feijão-bravo em anos de boa chuva"],
+    evitar: ["Café, batata, culturas de ciclo longo"],
+    calendario: "Plantar logo que chover: Novembro/Dezembro | Colher: Março",
+    dicas: "Água é riqueza — guarda em tanques. Planta perto de depósitos. Usa sementes de 3 meses."
   },
   "Huambo": {
+    capital: "Huambo",
     municipios: ["Bailundo", "Caála", "Catchiungo", "Ekunha", "Huambo", "Londuimbale", "Longonjo", "Mungo", "Tchicala-Tcholoanga", "Tchindjenje", "Ucuma"],
-    solo: "Ferralsolo + Matacães — acidez forte, precisa fósforo e calcário, boa fertilidade com correção",
-    clima: "Tropical de Altitude — ameno, noites frescas, chuvas Out–Abr, 1200–1600mm",
-    recomendadas: ["Milho", "Batata-inglesa", "Feijão", "Trigo", "Hortícolas", "Soja"],
-    possiveis: ["Frutas de clima temperado", "Café (zonas mais baixas e quentes)"],
-    evitar: ["Cana-de-açúcar", "Dendém", "Culturas tropicais de muito calor"],
-    calendario: "Plantar: Outubro–Novembro | Colher: Fevereiro–Maio — geadas possíveis Junho–Agosto",
-    dicas: "Acima de 1700m — escolher variedades precoces. Corrigir acidez com calcário. Bailundo e Caála referências agrícolas."
+    solo: "Terra vermelha, um pouco ácida — calcário ajuda muito. Com adubo fica muito produtiva. Boa drenagem.",
+    clima: "Ameno e fresco. Noites frias. Chuva de Outubro a Abril. 1200 a 1600mm por ano. Cuidado com frio de Junho a Agosto.",
+    recomendadas: ["Milho", "Batata-inglesa", "Feijão", "Trigo", "Hortaliças", "Soja"],
+    possiveis: ["Frutas de clima temperado", "Café nas zonas mais baixas"],
+    evitar: ["Cana-de-açúcar, Dendém, culturas de muito calor"],
+    calendario: "Plantar: Outubro a Novembro | Colher: Fevereiro a Maio",
+    dicas: "Acima de 1700m — escolhe variedades precoces. Corrige a acidez com calcário."
   },
   "Huíla": {
+    capital: "Lubango",
     municipios: ["Caconda", "Caluquembe", "Chibia", "Chiange", "Chicomba", "Chipindo", "Gambos", "Humpata", "Jamba", "Kuvango", "Lubango", "Matala", "Quilengues", "Quipungo"],
-    solo: "Ferralsolo + Matacães — serras ricas, vales produtivos, acidez variável",
-    clima: "Tropical de Altitude — fresco nas serras, mais quente nos vales, chuvas Nov–Abr 800–1400mm",
-    recomendadas: ["Milho", "Batata", "Feijão", "Massambala", "Hortícolas", "Frutas"],
-    possiveis: ["Café (zonas médias)", "Soja", "Girassol", "Cana-de-açúcar (vales)"],
+    solo: "Serra: terra rica e fresca. Vales: terra mais quente e fértil. Algumas zonas precisam de calcário.",
+    clima: "Zonas altas frescas, vales quentes. Chuva de Novembro a Abril. 800 a 1400mm por ano.",
+    recomendadas: ["Milho", "Batata", "Feijão", "Massambala", "Hortaliças", "Frutas"],
+    possiveis: ["Café", "Soja", "Girassol", "Cana-de-açúcar nos vales"],
     evitar: ["Culturas muito sensíveis ao frio"],
-    calendario: "Plantar: Outubro–Novembro | Colher: Março–Maio",
-    dicas: "Uma das regiões mais produtivas. Zonas altas: proteger de geadas Maio–Agosto. Matala tem água e calor — ideal cana e frutas."
+    calendario: "Plantar: Outubro a Novembro | Colher: Março a Maio",
+    dicas: "Matala tem água e calor — ideal para cana e frutas. Nas serras, protege as plantas do frio."
   },
-  "Lunda Norte": {
-    municipios: ["Cambulo", "Capenda-Camulemba", "Caungula", "Chitato", "Cuango", "Cuilo", "Dundo", "Lóvua", "Lubalo", "Lucapa", "Xá-Muteba"],
-    solo: "Ferralsolo — profundo, ácido, bem drenado, baixa fertilidade natural",
-    clima: "Tropical Úmido — chuvas Out–Maio, 1300–1800mm, quente e húmido",
-    recomendadas: ["Mandioca", "Milho", "Feijão", "Arroz", "Banana", "Frutas tropicais"],
-    possiveis: ["Café", "Dendém", "Abacaxi"],
-    evitar: ["Culturas de clima seco", "Massambala"],
-    calendario: "Plantar: Outubro–Novembro | Colher: Abril–Junho",
-    dicas: "Floresta e savana — proteger margens de rios. Solo ácido: adubação orgânica faz diferença."
-  },
-  "Lunda Sul": {
-    municipios: ["Cacolo", "Dala", "Muconda", "Saurimo"],
-    solo: "Ferralsolo — ácido, bem drenado, precisa de fósforo e matéria orgânica",
-    clima: "Tropical Subúmido — chuvas Nov–Abr, 1100–1400mm, estação seca definida",
-    recomendadas: ["Mandioca", "Milho", "Feijão", "Massambala", "Batata-doce"],
-    possiveis: ["Frutas tropicais resistentes", "Hortícolas na estação chuvosa"],
-    evitar: ["Culturas muito exigentes em água"],
-    calendario: "Plantar: Novembro | Colher: Abril–Maio",
-    dicas: "Terra boa, não desgastar com monocultura. Rotação de culturas mantém a terra produtiva."
+  "Ícolo e Bengo": {
+    capital: "Catete",
+    municipios: ["Catete", "Icolo", "Bengo", "Quiçama"],
+    solo: "Terra variada: zonas perto do rio Kwanza são ricas e frescas. Mais para o interior: mais arenosa e seca.",
+    clima: "Quente com estação chuvosa curta de Novembro a Abril. 500 a 800mm por ano. Mais fresca que Luanda.",
+    recomendadas: ["Mandioca", "Milho", "Feijão", "Hortaliças", "Frutas"],
+    possiveis: ["Cana-de-açúcar", "Pastagens"],
+    evitar: ["Culturas que precisam de muita chuva constante"],
+    calendario: "Plantar: Novembro | Colher: Março a Maio",
+    dicas: "Perto de Luanda — grande mercado. Aproveita a terra fresca do vale do Kwanza. Quiçama tem boas pastagens."
   },
   "Luanda": {
-    municipios: ["Belas", "Cacuaco", "Cazenga", "Icolo e Bengo", "Luanda", "Quilamba Quiaxi", "Quissama", "Talatona", "Viana"],
-    solo: "Arenossolo — muito arenoso, pouca retenção de água, fertilidade baixa",
-    clima: "Tropical Seco — chuvas limitadas Fev–Abr, 300–500mm/ano, calor constante",
-    recomendadas: ["Hortícolas (com rega obrigatória)", "Coco", "Frutas resistentes", "Mandacaru"],
-    possiveis: ["Milho (só na época chuvosa curta)", "Feijão"],
-    evitar: ["Café", "Dendém", "Qualquer cultura sem água garantida"],
-    calendario: "Plantar: Fevereiro | Colher: Maio–Junho — fora de época: só com irrigação",
-    dicas: "Água é o recurso mais escasso — usar cobertura morta para conservar humidade. Adubar sempre o solo arenoso."
+    capital: "Luanda",
+    municipios: ["Belas", "Cacuaco", "Cazenga", "Luanda", "Quilamba Quiaxi", "Talatona", "Viana"],
+    solo: "Terra muito arenosa, guarda pouca água e pouca nutrição. Precisa sempre de adubo e cobertura.",
+    clima: "Quente e seco. Chuva curta de Fevereiro a Abril. 300 a 500mm por ano.",
+    recomendadas: ["Hortaliças com rega", "Coco", "Frutas resistentes"],
+    possiveis: ["Milho e feijão só na época chuvosa"],
+    evitar: ["Café, Dendém, qualquer cultura sem água garantida"],
+    calendario: "Plantar: Fevereiro | Colher: Maio a Junho — fora disso só com irrigação",
+    dicas: "Usa palha e folhas por cima da terra para não secar. Aduba sempre."
+  },
+  "Lunda Norte": {
+    capital: "Dundo",
+    municipios: ["Cambulo", "Capenda-Camulemba", "Caungula", "Chitato", "Cuango", "Cuilo", "Dundo", "Lóvua", "Lubalo", "Lucapa", "Xá-Muteba"],
+    solo: "Terra vermelha profunda, bem drenada. Um pouco ácida. Fica forte com adubo orgânico.",
+    clima: "Quente e húmido. Chuva de Outubro a Maio. 1300 a 1800mm por ano. Floresta e savana.",
+    recomendadas: ["Mandioca", "Milho", "Feijão", "Arroz", "Banana", "Frutas tropicais"],
+    possiveis: ["Café", "Dendém", "Abacaxi"],
+    evitar: ["Massambala, sorgo e culturas de clima seco"],
+    calendario: "Plantar: Outubro a Novembro | Colher: Abril a Junho",
+    dicas: "Não desmata tudo. Deixa árvores. Protege margens de rios."
+  },
+  "Lunda Sul": {
+    capital: "Saurimo",
+    municipios: ["Cacolo", "Dala", "Muconda", "Saurimo"],
+    solo: "Terra vermelha, bem drenada. Um pouco ácida. Precisa de fósforo e matéria orgânica para render bem.",
+    clima: "Chuva de Novembro a Abril, estação seca bem definida. 1100 a 1400mm por ano.",
+    recomendadas: ["Mandioca", "Milho", "Feijão", "Massambala", "Batata-doce"],
+    possiveis: ["Frutas tropicais resistentes", "Hortaliças na chuva"],
+    evitar: ["Culturas que precisam de água o ano todo"],
+    calendario: "Plantar: Novembro | Colher: Abril a Maio",
+    dicas: "Não plante sempre a mesma coisa. Rotação mantém a terra viva e produtiva."
   },
   "Malanje": {
+    capital: "Malanje",
     municipios: ["Cacuso", "Calandula", "Cambundi-Catembo", "Cangandala", "Caombo", "Cunda-dia-Baze", "Kiwaba Nzogi", "Luquembo", "Marimba", "Massango", "Mucari", "Malanje", "Quela", "Quirima"],
-    solo: "Ferralsolo + Calcário — zonas com calcário são mais ricas, acidez mista",
-    clima: "Tropical Subúmido — chuvas Out–Abr, 1000–1400mm",
+    solo: "Terra variada: zonas com calcário são mais ricas. Outras mais ácidas. Vale do Cuanza muito fértil.",
+    clima: "Chuva de Outubro a Abril. 1000 a 1400mm por ano. Quente e boa humidade.",
     recomendadas: ["Mandioca", "Milho", "Arroz", "Algodão", "Frutas tropicais", "Café"],
     possiveis: ["Cana-de-açúcar", "Mamona", "Dendém"],
-    evitar: ["Culturas de clima frio", "Batata-inglesa"],
-    calendario: "Plantar: Outubro | Colher: Março–Maio",
-    dicas: "Calandula e arredores têm solos mais ricos. Não desgastar com uma só cultura. Cangandala é zona de reserva e solo especial."
+    evitar: ["Batata-inglesa e culturas de clima frio"],
+    calendario: "Plantar: Outubro | Colher: Março a Maio",
+    dicas: "Calandula e arredores têm solos fortes. Cangandala tem solo especial — cuida bem."
   },
   "Moxico": {
+    capital: "Luena",
     municipios: ["Alto Zambeze", "Camanongue", "Cameia", "Leua", "Luacano", "Luena", "Luchazes", "Lumbala Nguimbo"],
-    solo: "Arenossolo — profundo, arenoso, baixa retenção de água, fertilidade natural baixa",
-    clima: "Tropical de Savana — chuvas Nov–Abr, 1000–1400mm, estação seca longa",
-    recomendadas: ["Mandioca", "Milho", "Sorgo", "Massambala", "Pastagens e Gado"],
+    solo: "Terra arenosa e profunda. Guarda pouca humidade. Fertilidade natural baixa — adubo faz diferença grande.",
+    clima: "Chuva de Novembro a Abril, depois seca longa. 1000 a 1400mm por ano.",
+    recomendadas: ["Mandioca", "Milho", "Sorgo", "Massambala", "Pastagens", "Gado"],
     possiveis: ["Feijão", "Frutas resistentes"],
-    evitar: ["Culturas que precisam de chuva constante", "Hortícolas sem rega"],
-    calendario: "Plantar: Novembro | Colher: Abril–Maio",
-    dicas: "Solo arenoso — manter sempre coberto para não perder humidade. Fogo controlado na estação seca."
+    evitar: ["Culturas que precisam de chuva sempre", "Hortaliças sem rega"],
+    calendario: "Plantar: Novembro | Colher: Abril a Maio",
+    dicas: "Mata sempre a terra com capim ou palha para não perder humidade."
+  },
+  "Moxico Leste": {
+    capital: "Cazombo",
+    municipios: ["Cazombo", "Luau", "Camanongue-Leste", "Luchazes-Leste"],
+    solo: "Terra arenosa, profunda e leve. Guarda pouca água. Zonas perto de rios: terra mais rica e fresca.",
+    clima: "Chuva de Novembro a Abril, depois seca longa e forte. 900 a 1200mm por ano. Calor intenso na chuva.",
+    recomendadas: ["Mandioca", "Sorgo", "Massambala", "Milho resistente", "Pastagens"],
+    possiveis: ["Feijão", "Gado"],
+    evitar: ["Café, culturas de ciclo longo, hortaliças longe de rios"],
+    calendario: "Plantar: Novembro | Colher: Abril a Maio — planta cedo",
+    dicas: "Secas cada vez mais fortes — escolhe sementes que amadurecem cedo. Protege as margens dos rios."
   },
   "Namibe": {
+    capital: "Moçâmedes",
     municipios: ["Bibala", "Camacuio", "Moçâmedes", "Tombua", "Virei"],
-    solo: "Arenossolo — deserto, muito arenoso, quase sem matéria orgânica",
-    clima: "Semi-Árido a Desértico — muito seco, 50–300mm/ano, chuvas imprevisíveis",
-    recomendadas: ["Culturas de oásis com irrigação", "Palmeiras-datileiras", "Figueira-da-índia", "Gado resistente"],
-    possiveis: ["Hortícolas SOMENTE com irrigação controlada", "Tomate e cebola em campos fechados"],
-    evitar: ["QUALQUER cultura sem água garantida"],
-    calendario: "Chuvas imprevisíveis — plantar com sistema de irrigação o ano todo.",
-    dicas: "Água é mais cara que terra — captar águas subterrâneas e de ravina. Nunca deixar o solo exposto."
+    solo: "Terra muito seca e arenosa. Quase sem matéria orgânica. Só produz com água garantida.",
+    clima: "Muito seco. 50 a 300mm por ano. Chuva imprevisível, às vezes não cai nada.",
+    recomendadas: ["Dátil", "Figueira-da-índia", "Gado resistente", "Hortaliças só com irrigação"],
+    possiveis: ["Tomate e cebola em campos fechados com água"],
+    evitar: ["Qualquer cultura sem água garantida"],
+    calendario: "Chuva não dá para contar — irrigação o ano todo.",
+    dicas: "Água é mais cara que terra. Capta água de subsolo e de ravina. Nunca deixa a terra exposta."
   },
   "Uíge": {
+    capital: "Uíge",
     municipios: ["Alto Cauale", "Ambuíla", "Bembe", "Buengas", "Bungo", "Damba", "Maquela do Zombo", "Mucaba", "Negale", "Puri", "Quimbele", "Quitexe", "Santa Cruz", "Sanza Pombo", "Songo", "Uíge"],
-    solo: "Ferralsolo vermelho-amarelo — ácido, boa drenagem, precisa fósforo e calcário",
-    clima: "Tropical Úmido — chuvas Out–Maio, 1300–1700mm, temperaturas amenas",
+    solo: "Terra vermelha-amarela, bem drenada. Um pouco ácida — cinza e calcário ajudam muito. Boa para café.",
+    clima: "Chuva forte de Outubro a Maio. 1300 a 1700mm por ano. Temperaturas amenas.",
     recomendadas: ["Café", "Mandioca", "Arroz", "Milho", "Feijão", "Banana"],
-    possiveis: ["Frutas tropicais", "Mamona", "Abacaxi"],
-    evitar: ["Cana-de-açúcar em excesso", "Culturas de solo calcário"],
-    calendario: "Plantar: Outubro–Novembro | Colher: Abril–Junho",
-    dicas: "Uma das melhores zonas do país para café — sombrear pés jovens. Adubar com matéria orgânica."
+    possiveis: ["Frutas tropicais", "Abacaxi", "Mamona"],
+    evitar: ["Cana-de-açúcar em excesso, culturas de solo calcário"],
+    calendario: "Plantar: Outubro a Novembro | Colher: Abril a Junho",
+    dicas: "Uma das melhores zonas para café — deixa sombra com árvores."
   },
   "Zaire": {
-    municipios: ["Cuimba", "M'Banza Kongo", "N'Zeto", "Noqui", "Soyo", "Tomboco"],
-    solo: "Ferralsolo + Arenossolo — ácido, bem drenado, fertilidade baixa",
-    clima: "Tropical Úmido — chuvas Out–Abril, 1200–1500mm, calor constante",
+    capital: "Mbanza Kongo",
+    municipios: ["Cuimba", "Mbanza Kongo", "N'Zeto", "Noqui", "Soyo", "Tomboco"],
+    solo: "Interior: terra vermelha fértil. Costa: mais arenosa e pobre. Ambas um pouco ácidas.",
+    clima: "Quente e húmido. Chuva de Outubro a Abril. 1200 a 1500mm por ano.",
     recomendadas: ["Mandioca", "Dendém", "Banana", "Milho", "Feijão"],
     possiveis: ["Cacau", "Abacaxi", "Frutas"],
-    evitar: ["Culturas de clima frio", "Batata"],
-    calendario: "Plantar: Outubro | Colher: Fevereiro–Maio",
-    dicas: "Soyo e zonas ribeirinhas — proteger margens dos rios. Solo do interior mais fértil que a costa."
+    evitar: ["Batata, culturas de clima frio"],
+    calendario: "Plantar: Outubro | Colher: Fevereiro a Maio",
+    dicas: "Interior mais fértil que a costa. Soyo e zonas ribeirinhas — protege margens dos rios."
   }
 };
 
@@ -226,16 +277,16 @@ Object.keys(baseDados).forEach(prov => {
             </div>
         </header>
 
-        <div class="w-full h-40 overflow-hidden bg-green-100 flex items-center justify-center">
+        <div class="w-full h-36 overflow-hidden bg-green-100 flex items-center justify-center">
             <div class="text-center">
-                <i class="fa fa-leaf text-verde-medio text-5xl mb-2"></i>
+                <i class="fa fa-leaf text-verde-medio text-4xl mb-2"></i>
                 <p class="text-verde-escuro font-medium">Agricultura em Angola</p>
             </div>
         </div>
 
         <main class="flex-1 px-6 py-6 max-w-4xl mx-auto w-full">
-            <h2 class="text-2xl font-bold text-verde-escuro mb-3">Bem-vindo</h2>
-            <p class="text-gray-600 mb-6">Consulte informações confiáveis sobre solos, climas e as melhores culturas para cada região de Angola.</p>
+            <h2 class="text-xl font-bold text-verde-escuro mb-2">Bem-vindo</h2>
+            <p class="text-gray-600 mb-6">Consulte informações práticas sobre a terra, a chuva e o que melhor se planta em cada região de Angola.</p>
 
             <div class="relative mb-6">
                 <i class="fa fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-lg"></i>
@@ -249,14 +300,14 @@ Object.keys(baseDados).forEach(prov => {
             </button>
 
             <div class="grid grid-cols-3 gap-3 mb-8">
-                <div class="bg-green-100 rounded-lg p-4 flex items-center justify-center h-24">
-                    <i class="fa fa-mountain text-verde-escuro text-3xl"></i>
+                <div class="bg-green-100 rounded-lg p-4 flex items-center justify-center h-20">
+                    <i class="fa fa-mountain text-verde-escuro text-2xl"></i>
                 </div>
-                <div class="bg-green-100 rounded-lg p-4 flex items-center justify-center h-24">
-                    <i class="fa fa-pagelines text-verde-escuro text-3xl"></i>
+                <div class="bg-green-100 rounded-lg p-4 flex items-center justify-center h-20">
+                    <i class="fa fa-pagelines text-verde-escuro text-2xl"></i>
                 </div>
-                <div class="bg-green-100 rounded-lg p-4 flex items-center justify-center h-24">
-                    <i class="fa fa-tree text-verde-escuro text-3xl"></i>
+                <div class="bg-green-100 rounded-lg p-4 flex items-center justify-center h-20">
+                    <i class="fa fa-tree text-verde-escuro text-2xl"></i>
                 </div>
             </div>
 
@@ -273,8 +324,8 @@ Object.keys(baseDados).forEach(prov => {
         <header class="bg-verde-escuro text-white py-4 px-6 shadow-md flex items-center">
             <button id="voltar-inicio-1" class="mr-4 text-lg"><i class="fa fa-arrow-left"></i></button>
             <div>
-                <h1 class="text-xl font-bold">Províncias de Angola</h1>
-                <p class="text-green-200 text-sm">Escolha uma província</p>
+                <h1 class="text-xl font-bold">Províncias</h1>
+                <p class="text-green-200 text-sm">21 no total</p>
             </div>
         </header>
         <main class="px-6 py-6 max-w-4xl mx-auto w-full">
@@ -292,7 +343,7 @@ Object.keys(baseDados).forEach(prov => {
             <button id="voltar-prov" class="mr-4 text-lg"><i class="fa fa-arrow-left"></i></button>
             <div>
                 <h1 id="nome-provincia" class="text-xl font-bold"></h1>
-                <p class="text-green-200 text-sm">Escolha o município</p>
+                <p id="capital-prov" class="text-green-200 text-sm"></p>
             </div>
         </header>
         <main class="px-6 py-6 max-w-4xl mx-auto w-full">
@@ -331,6 +382,7 @@ const telas = {
   dados: document.getElementById('tela-dados')
 };
 
+let historico = [];
 let provAtual = '';
 const provincianOrdenadas = Object.keys(baseDados).sort((a, b) => a.localeCompare(b, 'pt'));
 
@@ -339,15 +391,39 @@ provincianOrdenadas.forEach(nome => {
   const li = document.createElement('li');
   li.className = 'provincia-item bg-white p-4 rounded-xl shadow-sm hover:bg-green-50 transition-colors cursor-pointer border-l-4 border-verde-medio';
   li.dataset.prov = nome;
-  li.textContent = nome;
+  li.innerHTML = `<span class="font-semibold">${nome}</span> <span class="text-gray-500 text-sm">— ${baseDados[nome].capital}</span>`;
   listaProvEl.appendChild(li);
   li.addEventListener('click', () => abrirMunicipios(nome));
 });
 
-document.getElementById('btn-selecionar-provincia').onclick = () => { telas.inicio.classList.add('hidden'); telas.prov.classList.remove('hidden'); telas.prov.classList.add('flex'); };
-document.getElementById('voltar-inicio-1').onclick = () => { telas.prov.classList.add('hidden'); telas.inicio.classList.remove('hidden'); };
-document.getElementById('voltar-prov').onclick = () => { telas.mun.classList.add('hidden'); telas.prov.classList.remove('hidden'); };
-document.getElementById('voltar-mun').onclick = () => { telas.dados.classList.add('hidden'); telas.mun.classList.remove('hidden'); };
+function mostrarTela(nomeTela) {
+  Object.entries(telas).forEach(([chave, el]) => {
+    el.classList.add('hidden');
+    el.classList.remove('flex');
+  });
+  telas[nomeTela].classList.remove('hidden');
+  telas[nomeTela].classList.add('flex');
+}
+
+document.getElementById('btn-selecionar-provincia').onclick = () => {
+  historico = ['inicio'];
+  mostrarTela('prov');
+};
+
+document.getElementById('voltar-inicio-1').onclick = () => {
+  historico.pop();
+  mostrarTela('inicio');
+};
+
+document.getElementById('voltar-prov').onclick = () => {
+  historico.pop();
+  mostrarTela('prov');
+};
+
+document.getElementById('voltar-mun').onclick = () => {
+  historico.pop();
+  mostrarTela('mun');
+};
 
 document.getElementById('busca-prov').addEventListener('input', e => {
   const t = e.target.value.toLowerCase();
@@ -355,17 +431,23 @@ document.getElementById('busca-prov').addEventListener('input', e => {
     li.style.display = li.dataset.prov.toLowerCase().includes(t) ? 'block' : 'none';
   });
 });
+
 document.getElementById('busca-global').addEventListener('input', e => {
   const t = e.target.value.toLowerCase();
   document.querySelectorAll('#lista-prov li').forEach(li => {
     li.style.display = li.dataset.prov.toLowerCase().includes(t) ? 'block' : 'none';
   });
-  if(t.length > 0) { telas.inicio.classList.add('hidden'); telas.prov.classList.remove('hidden'); telas.prov.classList.add('flex'); }
+  if(t.length > 0) {
+    historico = ['inicio'];
+    mostrarTela('prov');
+  }
 });
 
 function abrirMunicipios(provNome) {
+  historico.push('prov');
   provAtual = provNome;
   document.getElementById('nome-provincia').textContent = provNome;
+  document.getElementById('capital-prov').textContent = `Capital: ${baseDados[provNome].capital}`;
   const listaMunEl = document.getElementById('lista-mun');
   listaMunEl.innerHTML = '';
   
@@ -377,7 +459,7 @@ function abrirMunicipios(provNome) {
     listaMunEl.appendChild(li);
   });
   
-  telas.prov.classList.add('hidden'); telas.mun.classList.remove('hidden'); telas.mun.classList.add('flex');
+  mostrarTela('mun');
 }
 
 document.getElementById('busca-mun').addEventListener('input', e => {
@@ -388,41 +470,58 @@ document.getElementById('busca-mun').addEventListener('input', e => {
 });
 
 function abrirDados(provNome, munNome) {
+  historico.push('mun');
   const d = baseDados[provNome];
   document.getElementById('nome-municipio').textContent = munNome;
-  document.getElementById('nome-da-prov').textContent = provNome;
+  document.getElementById('nome-da-prov').textContent = `${provNome} — Capital: ${d.capital}`;
   
   const blocos = document.getElementById('blocos-dados');
   blocos.innerHTML = `
     <div class="bloco bg-white p-5 rounded-xl card-sombra">
-      <h3 class="font-bold text-lg text-verde-escuro mb-2">🪨 Solo</h3>
+      <h3 class="font-bold text-lg text-verde-escuro mb-2"><i class="fa fa-map-marker mr-2"></i> Província</h3>
+      <p class="text-gray-700">${provNome} — Capital: ${d.capital}</p>
+    </div>
+    <div class="bloco bg-white p-5 rounded-xl card-sombra">
+      <h3 class="font-bold text-lg text-verde-escuro mb-2"><i class="fa fa-mountain mr-2"></i> Tipo de Terra</h3>
       <p class="text-gray-700">${d.solo}</p>
     </div>
     <div class="bloco bg-white p-5 rounded-xl card-sombra">
-      <h3 class="font-bold text-lg text-verde-escuro mb-2">🌤️ Clima</h3>
+      <h3 class="font-bold text-lg text-verde-escuro mb-2"><i class="fa fa-cloud mr-2"></i> Chuva e Clima</h3>
       <p class="text-gray-700">${d.clima}</p>
     </div>
     <div class="bloco bg-white p-5 rounded-xl card-sombra">
-      <h3 class="font-bold text-lg text-verde-escuro mb-2">🌱 O que Plantar</h3>
-      <p class="text-green-700 font-semibold">✅ Recomendadas:</p>
+      <h3 class="font-bold text-lg text-verde-escuro mb-2"><i class="fa fa-leaf mr-2"></i> O Que Plantar</h3>
+      <p class="text-green-700 font-semibold">✅ Recomendado:</p>
       <p class="mb-2">${d.recomendadas.join(' • ')}</p>
-      <p class="text-yellow-600 font-semibold">🟡 Possíveis (com cuidados):</p>
+      <p class="text-yellow-600 font-semibold">🟡 Dá com cuidado:</p>
       <p class="mb-2">${d.possiveis.join(' • ')}</p>
-      <p class="text-red-600 font-semibold">❌ Não Recomendadas:</p>
+      <p class="text-red-600 font-semibold">❌ Evitar:</p>
       <p>${d.evitar.join(' • ')}</p>
     </div>
     <div class="bloco bg-white p-5 rounded-xl card-sombra">
-      <h3 class="font-bold text-lg text-verde-escuro mb-2">📅 Calendário Agrícola</h3>
+      <h3 class="font-bold text-lg text-verde-escuro mb-2"><i class="fa fa-calendar mr-2"></i> Quando Plantar e Colher</h3>
       <p class="text-gray-700">${d.calendario}</p>
     </div>
     <div class="bloco bg-white p-5 rounded-xl card-sombra">
-      <h3 class="font-bold text-lg text-verde-escuro mb-2">💧 Dicas Práticas</h3>
+      <h3 class="font-bold text-lg text-verde-escuro mb-2"><i class="fa fa-lightbulb-o mr-2"></i> Dicas Práticas</h3>
       <p class="text-gray-700">${d.dicas}</p>
     </div>
   `;
   
-  telas.mun.classList.add('hidden'); telas.dados.classList.remove('hidden'); telas.dados.classList.add('flex');
+  mostrarTela('dados');
 }
+
+// Botão voltar do celular — não sai da app
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' || e.key === 'Backspace') {
+    if (historico.length > 1) {
+      e.preventDefault();
+      historico.pop();
+      const ultima = historico[historico.length - 1];
+      mostrarTela(ultima);
+    }
+  }
+});
 </script>
 </body>
 </html>
